@@ -1,1 +1,4 @@
-m«ëˆ§½©buªàºg§µÊ'~(Å©©•èìRÆ y¶¬{®vçºh¢ø¥zŠ.µø¥y¶ëy©­æ¤zw(uçhºÚn¶êbÚ%Šw¬¡ù^aéƒu×œ¡×yÊz)éºØazZ]ŠÊek+aŠÉ²Æ z(§¦ëb›­~)^uçÚº[_¢»-v)è¢ëiºÚ.¶›­~)^uçÚº[_¢»-v‹­
+window.NV_CONFIG = {
+  supabaseUrl: "",
+  supabasePublishableKey: ""
+};
