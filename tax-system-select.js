@@ -31,6 +31,13 @@
       <div class="field"><label>Система налогообложения</label><select name="tax">${optionHtml(c.tax || 'Не заполнено')}</select></div>
       <div class="field"><label><input type="checkbox" name="hasEmployees" ${c.hasEmployees?'checked':''}> Есть сотрудники и зарплатная отчётность</label></div>
       <div class="field"><label><input type="checkbox" name="vatPayer" ${c.vatPayer?'checked':''}> Плательщик НДС</label></div>
+      <div class="field"><label><input type="checkbox" name="profitTax" ${c.profitTax?'checked':''}> Налог на прибыль</label></div>
+      <div class="field"><label><input type="checkbox" name="propertyTax" ${c.propertyTax?'checked':''}> Налог на имущество</label></div>
+      <div class="field"><label><input type="checkbox" name="transportTax" ${c.transportTax?'checked':''}> Транспортный налог</label></div>
+      <div class="field"><label><input type="checkbox" name="landTax" ${c.landTax?'checked':''}> Земельный налог</label></div>
+      <div class="field"><label><input type="checkbox" name="hasPatent" ${c.hasPatent?'checked':''}> Есть патент</label></div>
+      <div class="field"><label><input type="checkbox" name="eaesImport" ${c.eaesImport?'checked':''}> Импорт из ЕАЭС</label></div>
+      <div class="field"><label><input type="checkbox" name="statisticsReporting" ${c.statisticsReporting?'checked':''}> Есть формы Росстата</label></div>
       <div class="field"><label>Ответственный</label><input name="accountant" value="${esc(c.accountant)}"></div>
       <div class="field"><label>Стоимость обслуживания</label><input type="number" name="servicePrice" value="${esc(c.servicePrice || '')}"></div>
       <div class="field"><label>Статус</label><select name="status">
@@ -51,6 +58,13 @@
         tax: d.get('tax'),
         hasEmployees: d.get('hasEmployees') === 'on',
         vatPayer: d.get('vatPayer') === 'on',
+        profitTax: d.get('profitTax') === 'on',
+        propertyTax: d.get('propertyTax') === 'on',
+        transportTax: d.get('transportTax') === 'on',
+        landTax: d.get('landTax') === 'on',
+        hasPatent: d.get('hasPatent') === 'on',
+        eaesImport: d.get('eaesImport') === 'on',
+        statisticsReporting: d.get('statisticsReporting') === 'on',
         accountant: d.get('accountant'),
         servicePrice: d.get('servicePrice'),
         status: d.get('status')
