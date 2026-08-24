@@ -71,6 +71,7 @@
       });
       if (!existing) state.clients.push(c);
       c.history.push({at: new Date().toISOString(), text: existing ? 'Карточка клиента отредактирована' : 'Карточка клиента создана'});
+      window.ensureTaxCalendar?.();
       save();
       closeModal();
       renderClientCard();
