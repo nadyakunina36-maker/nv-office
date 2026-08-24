@@ -25,6 +25,7 @@
   async function authenticate(action){const data=new FormData(form),errorNode=document.getElementById('login-error');errorNode.textContent='Проверяю…';try{const result=await request(`/auth/v1/${action}`,{method:'POST',body:JSON.stringify({email:data.get('email'),password:data.get('password')})});if(!result.access_token){errorNode.textContent='Проверьте почту и подтвердите адрес, затем войдите.';return}session=result;localStorage.setItem(sessionKey,JSON.stringify(session));closeModal();await hydrate()}catch(error){errorNode.textContent=error.message}}
   loginButton.onclick=openLogin;
   passwordButton.onclick=openPassword;
-  window.NVCloud={scheduleSave,saveNow,hydrate};
+  async function fetchContractTemplate(id){if(!await ensureSession())throw new Error('Сначала войдите для синхронизации');const rows=await request(`/rest/v1/nv_contract_templates?id=eq.${encodeURIComponent(id)}&select=docx_base64`);if(!rows?.length)throw new Error('Шаблон договора не найден');const raw=atob(rows[0].docx_base64),bytes=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);return bytes.buffer}
+  window.NVCloud={scheduleSave,saveNow,hydrate,fetchContractTemplate};
   if(cfg.supabaseUrl&&cfg.supabasePublishableKey&&session)hydrate();
 })();
