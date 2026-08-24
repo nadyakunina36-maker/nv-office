@@ -1,0 +1,6 @@
+.sync-bar{min-height:38px;padding:7px 18px;background:#e8f1f7;color:#18324b;display:flex;align-items:center;justify-content:flex-end;gap:10px;font-size:12px;border-bottom:1px solid #c9dce8}
+.sync-bar.synced{background:#e8f3ed;color:#2f7d5a}
+.sync-bar.error{background:#f8e8e8;color:#b14949}
+.sync-bar .link-btn{color:inherit}
+.review-card{border-color:#d9b466!important;background:#fffaf0!important}
+.review-card .meta{padding-top:7px;margin-top:7px;border-top:1px solid #ead9b6}
