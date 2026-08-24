@@ -19,14 +19,18 @@
   ).join('');
 
   window.editClient = function editClientWithTaxSelect(id) {
-    const c = state.clients.find(x => String(x.id) === String(id));
-    if (!c) return;
+    const existing = state.clients.find(x => String(x.id) === String(id));
+    const c = existing || {id:`manual-${Date.now()}`,name:'',inn:'',kpp:'',tax:'Не заполнено',legalForm:'ИП',hasEmployees:false,vatPayer:false,accountant:'Не назначен',servicePrice:'',status:'В работе',source:'Ручной ввод',signatures:[],checklist:defaultChecklist.map((name,i)=>({id:i+1,name,status:'missing'})),knowledge:[],history:[],documents:[],team:[],accesses:[]};
 
     modal.classList.add('open');
-    document.getElementById('modal-title').textContent = 'Редактирование клиента';
+    document.getElementById('modal-title').textContent = existing ? 'Редактирование клиента' : 'Новый клиент';
     form.innerHTML = `
-      <div class="field"><label>Наименование</label><input name="name" value="${esc(c.name)}"></div>
+      <div class="field"><label>Наименование</label><input name="name" required value="${esc(c.name)}"></div>
+      <div class="field"><label>ИНН</label><input name="inn" inputmode="numeric" value="${esc(c.inn || '')}"></div>
+      <div class="field"><label>Форма бизнеса</label><select name="legalForm"><option ${c.legalForm==='ИП'?'selected':''}>ИП</option><option ${c.legalForm==='ООО'?'selected':''}>ООО</option><option ${c.legalForm==='АО'?'selected':''}>АО</option><option ${c.legalForm==='Прочее'?'selected':''}>Прочее</option></select></div>
       <div class="field"><label>Система налогообложения</label><select name="tax">${optionHtml(c.tax || 'Не заполнено')}</select></div>
+      <div class="field"><label><input type="checkbox" name="hasEmployees" ${c.hasEmployees?'checked':''}> Есть сотрудники и зарплатная отчётность</label></div>
+      <div class="field"><label><input type="checkbox" name="vatPayer" ${c.vatPayer?'checked':''}> Плательщик НДС</label></div>
       <div class="field"><label>Ответственный</label><input name="accountant" value="${esc(c.accountant)}"></div>
       <div class="field"><label>Стоимость обслуживания</label><input type="number" name="servicePrice" value="${esc(c.servicePrice || '')}"></div>
       <div class="field"><label>Статус</label><select name="status">
@@ -42,12 +46,17 @@
       const d = new FormData(form);
       Object.assign(c, {
         name: d.get('name'),
+        inn: d.get('inn'),
+        legalForm: d.get('legalForm'),
         tax: d.get('tax'),
+        hasEmployees: d.get('hasEmployees') === 'on',
+        vatPayer: d.get('vatPayer') === 'on',
         accountant: d.get('accountant'),
         servicePrice: d.get('servicePrice'),
         status: d.get('status')
       });
-      c.history.push({at: new Date().toISOString(), text: 'Карточка клиента отредактирована'});
+      if (!existing) state.clients.push(c);
+      c.history.push({at: new Date().toISOString(), text: existing ? 'Карточка клиента отредактирована' : 'Карточка клиента создана'});
       save();
       closeModal();
       renderClientCard();
