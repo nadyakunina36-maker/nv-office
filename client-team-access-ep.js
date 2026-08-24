@@ -19,6 +19,7 @@
     else state.tasks.push({id:Date.now()+Math.floor(Math.random()*1000),systemKey:key,title,client:c.name,priority:'high',dueDate,dueTime:'',status:'new',done:false,history:[{at:new Date().toISOString(),action:'Создана автоматически по сроку ЭЦП'}]});
   }
   function ensureAllSignatureTasks(){state.clients.forEach(c=>{ensureData(c);c.signatures.forEach(s=>ensureSignatureTask(c,s));});save();}
+  window.ensureAllSignatureTasks=ensureAllSignatureTasks;
 
   const baseRender=renderClientCard;
   renderClientCard=function(){
