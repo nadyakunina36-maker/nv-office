@@ -48,8 +48,7 @@
       </select></div>
       <div class="form-actions"><button type="button" class="secondary" onclick="closeModal()">Отмена</button><button class="primary">Сохранить</button></div>`;
 
-    form.onsubmit = e => {
-      e.preventDefault();
+    const applyFormValues = () => {
       const d = new FormData(form);
       Object.assign(c, {
         name: d.get('name'),
@@ -69,6 +68,21 @@
         servicePrice: d.get('servicePrice'),
         status: d.get('status')
       });
+    };
+
+    // Existing cards are saved while the user is typing. Enter no longer
+    // submits and closes the whole card accidentally.
+    if (existing) {
+      form.addEventListener('input', () => { applyFormValues(); save(); });
+      form.addEventListener('change', () => { applyFormValues(); save(); });
+    }
+    form.onkeydown = e => {
+      if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && e.target.tagName !== 'BUTTON') e.preventDefault();
+    };
+
+    form.onsubmit = e => {
+      e.preventDefault();
+      applyFormValues();
       if (!existing) state.clients.push(c);
       c.history.push({at: new Date().toISOString(), text: existing ? 'Карточка клиента отредактирована' : 'Карточка клиента создана'});
       window.ensureTaxCalendar?.();
