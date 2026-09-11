@@ -1,4 +1,6 @@
-window.NV_CONFIG = {
-  supabaseUrl: "",
-  supabasePublishableKey: ""
-};
+if (!window.NV_CONFIG) {
+  window.NV_CONFIG = {
+    supabaseUrl: "",
+    supabasePublishableKey: ""
+  };
+}
